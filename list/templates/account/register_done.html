@@ -1,0 +1,5 @@
+{% load crispy_forms_tags %} 
+{% block body %}
+    <h1>Добро пожаловать, {{ new_user.first_name }}!</h1>
+    <p>Ваш личный кабинет успешно создан. Вы можете <a href="{% url "login" %}">войти в личный кабинет</a>.</p>
+{% endblock %}

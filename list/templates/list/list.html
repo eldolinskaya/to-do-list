@@ -1,0 +1,33 @@
+{% load crispy_forms_tags %} 
+
+{% block body %}
+<h1>Список дел</h1>
+<a style="color: rgb(47, 135, 170)" href='/list/create/'>Добавить</a>
+<br><br>
+<table class="table table-striped">
+    <thead class="table table-info">
+    <tr>
+      <th scope="col" >Пользователь</th>
+      <th scope="col" >#</th>
+      <th scope="col" >Наименование</th>
+      <th scope="col" >Выполнено</th>
+      <th scope="col">Удаление</th>
+      <th scope="col">Обновление</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for obj in object_list %}
+  {% if obj.user == user%}
+    <tr>
+      <td> {{ obj.user }} </td>
+      <td> {{ obj.pk }} </td>
+      <td> {{ obj.name }} </td>
+      <td> {% if obj.done == True %} + {% else %} - {% endif %}</td>
+      <td><a style="color: rgb(47, 135, 170)" href='/list/delete/{{ obj.pk }}/'>Удалить</a></td>
+      <td><a style="color: rgb(47, 135, 170)" href='/list/update/{{ obj.pk }}/'>Обновить</a></td>
+    </tr>    
+    {%endif%}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock body %} 

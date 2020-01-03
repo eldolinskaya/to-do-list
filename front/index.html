@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+<body>
+    <h1>Hello</h1>
+    <div id="vueapp">
+        <table>
+            <tr>
+                <th>#</th>
+                <th>name</th>
+                <th>actions</th>
+            </tr>
+            <tr v-for='book in books'>
+                <td>{{book.pk}}</td>
+                <td>{{book.title}}</td>
+                <td><button type='button' @click='deleteBook(book.pk)'>Delete</button></td>
+            </tr>
+        </table>
+        <input type="text" v-model='title'><button type='button' @click = 'addnew()'>ADD</button>
+    </div>
+      <script >
+      var app = new Vue({
+        el: '#vueapp',
+        data: {
+          books: [],
+          title: null,
+        },
+        methods: {
+            addnew(){
+                axios
+                .post('http://127.0.0.1:8000/book/list'), {
+                    title: this.title
+                }
+                .then(
+                resp => {
+                    console.log(resp);
+                    this.books.push(resp.data)
+                    this.title = ''
+                },
+                )
+            deleteBook(pk) {
+                axios
+                .delete('http://127.0.0.1:8000/book/list'+pk)
+                .then(
+                resp => {
+                    this.books.findIndex((el)=> {
+                        return el.pk ===pk
+                    })
+                    this.books.splice(index)
+                }
+                )
+        },
+        mounted() {
+            axios
+            .get('http://127.0.0.1:8000/book/list')
+            .then(
+                resp => {
+                    this.books = resp.data;
+                }
+            )
+        }
+      })
+      </script>
+</body>
+</html>

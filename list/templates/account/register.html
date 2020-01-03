@@ -1,0 +1,11 @@
+{% load crispy_forms_tags %} 
+{% block body %}
+    <h1>Создать личный кабинет</h1>
+    <p>Пожалуйста, зарегистрируйтесь, используя следующую форму:</p>
+    <form action="." method="post">
+        {{user_form|crispy}}
+        {{ new_profile|crispy }}
+        {% csrf_token %}
+        <p><input type="submit" value="Создать"></p>
+    </form>
+{% endblock %}
